@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>话题管理后台 · 竞品调研报告</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#4361ee;--primary-light:#eef0ff;--bg:#f8f9fc;--surface:#fff;
+  --border:#e2e5ed;--text:#1a1d2e;--text-secondary:#6b7085;--text-muted:#989db0;
+  --green:#10b981;--orange:#f59e0b;--red:#ef4444;--blue:#3b82f6;
+  --radius:10px;--radius-sm:6px;--shadow:0 1px 4px rgba(0,0,0,.04);--shadow-md:0 4px 16px rgba(0,0,0,.06);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:0}
+.page{max-width:960px;margin:0 auto;padding:40px 24px 80px}
+
+/* Header */
+.report-header{background:linear-gradient(135deg,#1e1b4b,#312e81);color:#fff;padding:48px 40px;border-radius:var(--radius);margin-bottom:32px;position:relative;overflow:hidden}
+.report-header::after{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%}
+.report-header .badge{display:inline-block;background:rgba(255,255,255,.15);color:#c7d2fe;font-size:12px;padding:3px 12px;border-radius:20px;margin-bottom:16px;letter-spacing:1px}
+.report-header h1{font-size:28px;font-weight:800;margin-bottom:8px}
+.report-header .subtitle{color:#a5b4fc;font-size:15px}
+
+/* Section */
+.section{margin-bottom:36px}
+.section-title{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.section-title .icon{font-size:22px}
+.section-title .count{font-size:12px;color:var(--text-muted);font-weight:400;margin-left:auto}
+
+/* Cards */
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 28px;margin-bottom:16px;border:1px solid var(--border)}
+.card:hover{box-shadow:var(--shadow-md)}
+
+/* Platform header */
+.platform-header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.platform-avatar{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0}
+.platform-info h3{font-size:16px;font-weight:700;margin-bottom:2px}
+.platform-info .stars{color:var(--orange);font-size:13px;letter-spacing:1px}
+.platform-info .reason{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5}
+
+/* Tags */
+.tag{display:inline-block;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:600;line-height:1.8}
+.tag-p0{background:#fef2f2;color:#dc2626}
+.tag-p1{background:#fffbeb;color:#d97706}
+.tag-p2{background:#eff6ff;color:#2563eb}
+.tag-have{background:#ecfdf5;color:#059669}
+.tag-miss{background:#fef2f2;color:#dc2626}
+
+/* Feature list */
+.feature-list{margin:8px 0 0;list-style:none}
+.feature-list li{position:relative;padding:6px 0 6px 22px;font-size:13px;color:var(--text-secondary);line-height:1.6}
+.feature-list li::before{content:"→";position:absolute;left:0;color:var(--primary);font-weight:700}
+.feature-list li strong{color:var(--text)}
+
+/* Matrix table */
+.matrix-wrap{overflow-x:auto;margin:16px 0}
+.matrix{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border)}
+.matrix thead{background:#f1f4f9}
+.matrix th{padding:12px 14px;text-align:center;font-weight:700;font-size:12px;color:var(--text-secondary);white-space:nowrap}
+.matrix th:first-child{text-align:left;padding-left:20px;min-width:160px}
+.matrix td{padding:10px 14px;text-align:center;border-top:1px solid var(--border)}
+.matrix td:first-child{text-align:left;padding-left:20px;font-weight:600;font-size:13px}
+.matrix .highlight{background:var(--primary-light)}
+.matrix .yes{color:var(--green);font-weight:700}
+.matrix .no{color:var(--text-muted)}
+.matrix .partial{color:var(--orange);font-weight:600}
+
+/* Priority cards */
+.priority-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.priority-card{border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+.priority-card.p0{background:#fef2f2;border-color:#fecaca}
+.priority-card.p1{background:#fffbeb;border-color:#fde68a}
+.priority-card.p2{background:#eff6ff;border-color:#bfdbfe}
+.priority-card .prio-badge{display:inline-block;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:800;margin-bottom:12px}
+.priority-card.p0 .prio-badge{background:#dc2626;color:#fff}
+.priority-card.p1 .prio-badge{background:#d97706;color:#fff}
+.priority-card.p2 .prio-badge{background:#2563eb;color:#fff}
+.priority-card h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.priority-card .desc{font-size:12px;color:var(--text-secondary);line-height:1.7}
+.priority-card .items{margin-top:12px}
+.priority-card .items .item{font-size:13px;padding:6px 0;border-top:1px dashed rgba(0,0,0,.08);line-height:1.5}
+.priority-card .items .item strong{display:block;font-size:13px;margin-bottom:2px}
+.priority-card .items .item span{font-size:12px;color:var(--text-secondary)}
+
+/* Site list */
+.site-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.site-card{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;cursor:default;transition:all .15s}
+.site-card:hover{box-shadow:var(--shadow-md);border-color:var(--primary)}
+.site-card .site-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.site-card .site-name{font-size:14px;font-weight:700}
+.site-card .site-focus{font-size:11px;color:var(--text-muted);margin-top:2px}
+
+/* Summary box */
+.summary-box{background:linear-gradient(135deg,#eef0ff,#f0f4ff);border:1px solid #c7d2fe;border-radius:var(--radius);padding:24px 28px;margin-top:36px}
+.summary-box p{font-size:14px;color:var(--text);line-height:1.8}
+.summary-box strong{color:var(--primary)}
+
+/* Responsive */
+@media(max-width:768px){
+  .priority-grid{grid-template-columns:1fr}
+  .site-grid{grid-template-columns:1fr}
+  .report-header{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="report-header">
+  <div class="badge">COMPETITIVE ANALYSIS</div>
+  <h1>话题管理后台 · 竞品调研报告</h1>
+  <p class="subtitle">美柚社区运营管理系统 — 话题模块对标分析 · 2026年6月</p>
+</div>
+
+<!-- 一、竞品总览 -->
+<div class="section">
+  <div class="section-title">
+    <span class="icon">🔭</span>一、竞品总览
+    <span class="count">6 个平台</span>
+  </div>
+
+  <!-- 微博 -->
+  <div class="card">
+    <div class="platform-header">
+      <div class="platform-avatar" style="background:#e6162d">微</div>
+      <div class="platform-info">
+        <h3>微博 — 话题管理标杆</h3>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="reason">国内话题运营体系最成熟的平台，话题广场+主持人机制运行超过10年</div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>话题分级体系：</strong>普通话题 → 主持人话题 → 商业话题 → 超级话题，每级不同审核与权限链路</li>
+      <li><strong>话题广场运营：</strong>按品类配置话题榜单位序，支持手动置顶与自动热度排序混合</li>
+      <li><strong>黑产治理：</strong>刷量识别、水军清洗、异常热度降权</li>
+      <li><strong>主持人后台：</strong>主持人申请/审核/考核/撤销，配有活跃度看板</li>
+      <li><strong>话题合并/迁移：</strong>相似话题自动去重建议 → 人工确认 → 帖子与粉丝自动迁移</li>
+    </ul>
+    <div style="margin-top:12px">
+      <span class="tag tag-p1">🔑 核心参考：话题合并/迁移、主持人权限体系、黑产治理</span>
+    </div>
+  </div>
+
+  <!-- 小红书 -->
+  <div class="card">
+    <div class="platform-header">
+      <div class="platform-avatar" style="background:#ff2442">红</div>
+      <div class="platform-info">
+        <h3>小红书 — 标签话题化+内容聚合</h3>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="reason">与美柚用户画像高度相似（女性用户+生活方式+千人千面推荐）</div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>标签→话题升级流水线：</strong>UGC标签 → 系统识别高频 → 半自动升级为官方话题 → 专属聚合页</li>
+      <li><strong>话题聚合页编辑器：</strong>头图/描述/精选帖置顶/关联话题推荐，类似话题mini-site</li>
+      <li><strong>生命周期自动化：</strong>冷启动期(人工助流) → 成长期(算法接管) → 衰退期(归档/下线)，配有阶段阈值</li>
+      <li><strong>双向关联：</strong>话题详情页看参与笔记数/曝光/转化漏斗；笔记后台看关联了哪些话题</li>
+    </ul>
+    <div style="margin-top:12px">
+      <span class="tag tag-p0">🔑 核心参考：标签→话题自动化升级、聚合页编辑器、阶段化生命周期</span>
+    </div>
+  </div>
+
+  <!-- 知乎 -->
+  <div class="card">
+    <div class="platform-header">
+      <div class="platform-avatar" style="background:#0066ff">知</div>
+      <div class="platform-info">
+        <h3>知乎 — 话题知识图谱</h3>
+        <div class="stars">⭐⭐⭐⭐</div>
+        <div class="reason">话题体系最注重结构化关系，适合参考话题层级与关联管理</div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>话题父子关系：</strong>树状层级，「孕期」为父，「孕期饮食」「孕期运动」为子，帖子自动聚合</li>
+      <li><strong>话题索引编辑：</strong>运营可编辑话题"百科式"描述、精选回答、关联话题、封面图</li>
+      <li><strong>三维评分体系：</strong>每个话题有活跃度/内容质量/增长趋势评分，决定推荐权重</li>
+      <li><strong>公共编辑权限：</strong>公共编辑 + 专业认证用户优先的协作机制</li>
+    </ul>
+    <div style="margin-top:12px">
+      <span class="tag tag-p0">🔑 核心参考：话题父子层级、三维质量评分</span>
+    </div>
+  </div>
+
+  <!-- 抖音/快手 -->
+  <div class="card">
+    <div class="platform-header">
+      <div class="platform-avatar" style="background:#000">抖</div>
+      <div class="platform-info">
+        <h3>抖音 / 快手 — 话题挑战+时效运营</h3>
+        <div class="stars">⭐⭐⭐⭐</div>
+        <div class="reason">话题运营强调时效性和活动化，适合参考短期/周期性话题玩法</div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>话题挑战活动配置：</strong>话题+活动模板+奖励规则+倒计时+数据实时看板一体化</li>
+      <li><strong>热度预测与助推：</strong>系统预测话题潜力 → 运营确认 → 自动分配初始流量 → 根据互动数据加码或止损</li>
+      <li><strong>素材库联动：</strong>话题关联示例视频/图片素材，降低用户参与门槛</li>
+      <li><strong>时效自动管理：</strong>到期自动下线并归档数据，支持一键延期</li>
+    </ul>
+    <div style="margin-top:12px">
+      <span class="tag tag-p1">🔑 核心参考：热度预测+流量助推、话题与活动/素材联动、时效自动管理</span>
+    </div>
+  </div>
+
+  <!-- 宝宝树/妈妈网 -->
+  <div class="card">
+    <div class="platform-header">
+      <div class="platform-avatar" style="background:#ff9500">树</div>
+      <div class="platform-info">
+        <h3>宝宝树 / 妈妈网 — 同赛道垂直竞品</h3>
+        <div class="stars">⭐⭐⭐⭐</div>
+        <div class="reason">与美柚同赛道（母婴女性社区），话题与用户生命周期强绑定</div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>用户阶段化话题推荐：</strong>根据孕期周数/宝宝月龄自动匹配话题池，「孕早期→推荐孕吐缓解话题」</li>
+      <li><strong>阶段流转管理：</strong>用户阶段变更时自动调整话题推荐权重，运营可配置流转规则</li>
+      <li><strong>知识型话题库：</strong>大量PGC+UGC混合问答式话题，配有专家认证标识</li>
+    </ul>
+    <div style="margin-top:12px">
+      <span class="tag tag-p0">🔑 核心参考：用户生命周期与话题推荐联动、知识型话题PGC运营</span>
+    </div>
+  </div>
+
+  <!-- B站 -->
+  <div class="card">
+    <div class="platform-header">
+      <div class="platform-avatar" style="background:#fb7299">B</div>
+      <div class="platform-info">
+        <h3>B站 — 标签TAG+分区管理</h3>
+        <div class="stars">⭐⭐⭐</div>
+        <div class="reason">TAG系统和分区管理，可作为内容分类治理的参考</div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>TAG聚合页：</strong>精选视频、排行榜、相关TAG推荐</li>
+      <li><strong>分区交叉权重：</strong>一个话题可出现在多个分区，运营可配置各分区展示权重</li>
+      <li><strong>话题风向标：</strong>基于搜索趋势自动识别上升话题，推送"待挖掘"池</li>
+    </ul>
+    <div style="margin-top:12px">
+      <span class="tag tag-p2">🔑 核心参考：话题自动发现/待挖掘池、分区交叉权重</span>
+    </div>
+  </div>
+</div>
+
+<!-- 二、功能对比矩阵 -->
+<div class="section">
+  <div class="section-title">
+    <span class="icon">📊</span>二、功能对比矩阵
+  </div>
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>能力维度</th>
+          <th>美柚(当前)</th>
+          <th>微博</th>
+          <th>小红书</th>
+          <th>知乎</th>
+          <th>抖音/快手</th>
+          <th>宝宝树</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>话题CRUD</td>
+          <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        </tr>
+        <tr class="highlight">
+          <td>话题池分级</td>
+          <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
+        </tr>
+        <tr><td>话题父子关系</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td></tr>
+        <tr><td>话题合并/迁移</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td></tr>
+        <tr><td>标签→话题升级</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+        <tr><td>话题聚合页编辑</td><td class="partial">○</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr class="highlight">
+          <td>身份/阶段排序</td>
+          <td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td>
+        </tr>
+        <tr><td>阶段化生命周期</td><td class="partial">○</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>热度预测/助推</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td></tr>
+        <tr><td>话题活动联动</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td></tr>
+        <tr><td>黑产/质量治理</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td></tr>
+        <tr><td>话题自动发现</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td></tr>
+        <tr><td>主持人/权限体系</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:8px">
+    注：带底色行 = 美柚当前已有能力；✓ = 具备；✗ = 不具备；○ = 部分具备
+  </p>
+</div>
+
+<!-- 三、优先级建议 -->
+<div class="section">
+  <div class="section-title">
+    <span class="icon">🎯</span>三、分期建设建议
+  </div>
+  <div class="priority-grid">
+    <!-- P0 -->
+    <div class="priority-card p0">
+      <div class="prio-badge">P0 · 快速补齐</div>
+      <h4>差异化壁垒</h4>
+      <p class="desc">基于美柚身份体系的天然优势，构建竞品不具备的话题管理深度</p>
+      <div class="items">
+        <div class="item">
+          <strong>1. 话题父子层级</strong>
+          <span>「备孕→怀孕→育儿」阶段树，父话题聚合子话题数据。如「孕期饮食」下设「孕期早餐」「孕期零食」</span>
+        </div>
+        <div class="item">
+          <strong>2. 话题聚合页增强</strong>
+          <span>精选帖置顶、关联话题推荐、描述富文本编辑、头图配置</span>
+        </div>
+        <div class="item">
+          <strong>3. 标签→话题升级流水线</strong>
+          <span>社区标签达阈值 → 预警池 → 运营一键升级官方话题（预警池已有，缺升级流程）</span>
+        </div>
+      </div>
+    </div>
+    <!-- P1 -->
+    <div class="priority-card p1">
+      <div class="prio-badge">P1 · 运营提效</div>
+      <h4>自动化与效率</h4>
+      <p class="desc">减少人工配置成本，让话题运营从"人治"走向"机制化"</p>
+      <div class="items">
+        <div class="item">
+          <strong>4. 阶段化生命周期策略</strong>
+          <span>冷启动期 → 成长期 → 成熟期 → 衰退期，各阶段配置触发条件和自动化动作</span>
+        </div>
+        <div class="item">
+          <strong>5. 话题热度预测</strong>
+          <span>基于历史数据做潜力预估，辅助运营排期推荐位</span>
+        </div>
+        <div class="item">
+          <strong>6. 话题活动联动</strong>
+          <span>话题关联运营活动（如打卡挑战），同一页面管理话题+活动素材+奖励</span>
+        </div>
+      </div>
+    </div>
+    <!-- P2 -->
+    <div class="priority-card p2">
+      <div class="prio-badge">P2 · 治理与生态</div>
+      <h4>长期健康运营</h4>
+      <p class="desc">当话题量达到一定规模后的治理能力建设</p>
+      <div class="items">
+        <div class="item">
+          <strong>7. 话题合并/去重</strong>
+          <span>相似话题自动检测建议合并，内容与粉丝自动迁移</span>
+        </div>
+        <div class="item">
+          <strong>8. 内容质量评分</strong>
+          <span>话题维度帖子质量分，低于阈值触发运营复查</span>
+        </div>
+        <div class="item">
+          <strong>9. 话题主持人机制</strong>
+          <span>优质UGC用户认领话题管理权，减轻运营压力</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 四、建议体验的页面 -->
+<div class="section">
+  <div class="section-title">
+    <span class="icon">🔗</span>四、建议深入体验
+    <span class="count">反向推演后台设计</span>
+  </div>
+  <div class="site-grid">
+    <div class="site-card">
+      <div class="site-icon" style="background:#fef2f2;color:#e6162d">微</div>
+      <div>
+        <div class="site-name">微博话题广场 &amp; 超级话题页</div>
+        <div class="site-focus">重点关注：话题等级差异、主持人机制</div>
+      </div>
+    </div>
+    <div class="site-card">
+      <div class="site-icon" style="background:#fff0f3;color:#ff2442">红</div>
+      <div>
+        <div class="site-name">小红书话题聚合页</div>
+        <div class="site-focus">搜索关键词 → 话题tab → 观察UI结构与关联推荐</div>
+      </div>
+    </div>
+    <div class="site-card">
+      <div class="site-icon" style="background:#eef3ff;color:#0066ff">知</div>
+      <div>
+        <div class="site-name">知乎话题页</div>
+        <div class="site-focus">重点关注：父子话题结构、话题索引编辑</div>
+      </div>
+    </div>
+    <div class="site-card">
+      <div class="site-icon" style="background:#f5f5f5;color:#000">抖</div>
+      <div>
+        <div class="site-name">抖音话题挑战页</div>
+        <div class="site-focus">重点关注：时效性话题的活动化包装</div>
+      </div>
+    </div>
+    <div class="site-card">
+      <div class="site-icon" style="background:#fff7ed;color:#ff9500">树</div>
+      <div>
+        <div class="site-name">宝宝树社区话题页</div>
+        <div class="site-focus">重点关注：用户阶段与话题的绑定关系</div>
+      </div>
+    </div>
+    <div class="site-card">
+      <div class="site-icon" style="background:#fff0f5;color:#fb7299">B</div>
+      <div>
+        <div class="site-name">B站 TAG 聚合页</div>
+        <div class="site-focus">重点关注：分区交叉管理、TAG风向标</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary-box">
+  <p>
+    💡 <strong>核心结论：</strong>美柚的<strong>"按身份独立配置推荐位"</strong>是目前竞品中极少见的设计，这是一个显著的差异化优势。建议在此基础上，重点补齐<strong>话题父子层级</strong>和<strong>标签→话题的自动化升级流水线</strong>两个能力，让话题体系从"Excel式列表管理"升级为<strong>"有结构的生态运营平台"</strong>。
+  </p>
+</div>
+
+</div>
+</body>
+</html>

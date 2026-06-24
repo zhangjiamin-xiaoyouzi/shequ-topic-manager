@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+node_modules/
+_gen_*.py
+_gen_*.js
+_write_*.py
+script_*.js
+build_html.py
+gen_sections.py
+tmp_*.html
+_check.js
