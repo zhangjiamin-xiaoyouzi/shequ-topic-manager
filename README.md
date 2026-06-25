@@ -12,7 +12,7 @@
 ## 技术栈
 
 - 纯 HTML + CSS + JavaScript
-- 美柚设计规范 (Meiyou Design)
+- 设计规范 (Meiyou Design)
 -  localStorage 数据持久化
 -  postMessage 跨页面通信
 
