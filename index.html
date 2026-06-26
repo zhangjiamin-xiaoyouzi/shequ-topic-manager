@@ -18,13 +18,21 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-syste
 
 /* ===== Sidebar (美柚轻暖风格) ===== */
 .sidebar{width:var(--sidebar-w);background:#fff;color:var(--text);position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;border-right:1px solid var(--border);box-shadow:none}
-.sidebar-logo{padding:16px 20px;font-size:16px;font-weight:600;color:var(--primary);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.sidebar-logo{padding:16px 20px;font-size:15px;font-weight:600;color:var(--primary);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .sidebar-logo .dot{width:8px;height:8px;background:var(--primary);border-radius:50%}
 .sidebar-nav{flex:1;padding:8px 0;overflow-y:auto}
-.sidebar-nav .nav-group{padding:8px 20px 4px;font-size:11px;color:var(--text-secondary);letter-spacing:.5px}
-.sidebar-nav .nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:14px;cursor:pointer;transition:all .15s;border-left:3px solid transparent;margin:1px 0;color:var(--text);border-radius:0 4px 4px 0}
+.sidebar-nav .nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;cursor:pointer;transition:all .15s;border-left:3px solid transparent;margin:1px 0;color:var(--text);border-radius:0 4px 4px 0;position:relative}
+.sidebar-nav .nav-item .nav-icon{width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary);flex-shrink:0}
+.sidebar-nav .nav-item:hover .nav-icon{color:var(--primary)}
+.sidebar-nav .nav-item.active .nav-icon{color:var(--primary)}
 .sidebar-nav .nav-item:hover{background:var(--primary-light);color:var(--primary)}
 .sidebar-nav .nav-item.active{background:var(--primary-light);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.sidebar-nav .nav-item .arrow{margin-left:auto;font-size:12px;transition:transform .2s;color:var(--text-secondary)}
+.sidebar-nav .nav-item .arrow.open{transform:rotate(90deg)}
+.sidebar-nav .nav-sub{overflow:hidden;transition:max-height .25s ease}
+.sidebar-nav .nav-sub .nav-sub-item{display:flex;align-items:center;padding:8px 20px 8px 44px;font-size:13px;cursor:pointer;transition:all .15s;color:var(--text);border-radius:0 4px 4px 0;margin:1px 0}
+.sidebar-nav .nav-sub .nav-sub-item:hover{background:var(--primary-light);color:var(--primary)}
+.sidebar-nav .nav-sub .nav-sub-item.active{background:var(--primary-light);color:var(--primary);font-weight:600}
 
 /* ===== Main Area ===== */
 .main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-width:0}
@@ -160,14 +168,30 @@ tbody tr.selected{background:var(--primary-light)}
 <aside class="sidebar">
 <div class="sidebar-logo"><span class="dot"></span>社区运营管理系统</div>
 <nav class="sidebar-nav">
-<div class="nav-group">内容管理</div>
-<div class="nav-item active">话题管理</div>
-<div class="nav-item">帖子管理</div>
-<div class="nav-item">用户管理</div>
-<div class="nav-group">运营工具</div>
-<div class="nav-item">数据看板</div>
-<div class="nav-item">策略引擎</div>
-<div class="nav-item">系统设置</div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>数据分析</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>运营工具</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>活动管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>质检管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>内容管理</span><span class="arrow">▸</span></div>
+  <div class="nav-sub" style="max-height:0px">
+    <div class="nav-sub-item">动态内容池</div>
+    <div class="nav-sub-item">AIGC</div>
+    <div class="nav-sub-item" onclick="toggleNav(this)"><span>推送内容管理</span><span class="arrow">▸</span></div>
+  </div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>话题管理</span><span class="arrow open">▸</span></div>
+  <div class="nav-sub" style="max-height:200px">
+    <div class="nav-sub-item active">话题列表</div>
+  </div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>任务中心后台</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>内容分发</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>回复管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>用户激励管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>达人认证管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>配置管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>评论审核</span><span class="arrow"></span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>创作者管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>我的导出</span><span class="arrow">▸</span></div>
+  <div class="nav-item" onclick="toggleNav(this)"><span>我的审批</span><span class="arrow">▸</span></div>
 </nav>
 </aside>
 
@@ -217,7 +241,7 @@ tbody tr.selected{background:var(--primary-light)}
   <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
     <select id="alertMetric1" class="alert-rule-select" style="min-width:110px">
       <option value="dailyPosts">发帖量</option>
-      <option value="participants">参与人数</option>
+      <option value="totalDiscuss">总讨论</option>
     </select>
     <span style="font-weight:600;color:var(--text)">≥</span>
     <input type="number" id="alertThreshold1" class="alert-rule-input" value="500" min="0" step="10" style="width:90px">
@@ -238,7 +262,7 @@ tbody tr.selected{background:var(--primary-light)}
   <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;font-weight:500">条件二</div>
   <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
     <select id="alertMetric2" class="alert-rule-select" style="min-width:110px">
-      <option value="participants">参与人数</option>
+      <option value="totalDiscuss">总讨论</option>
       <option value="dailyPosts">发帖量</option>
     </select>
     <span style="font-weight:600;color:var(--text)">≥</span>
@@ -262,10 +286,11 @@ tbody tr.selected{background:var(--primary-light)}
 <div class="filter-panel">
 <div class="filter-row">
 <div class="filter-item"><label>名称 / ID</label><input type="text" id="filterKeyword" placeholder="话题名称或ID" oninput="applyFilters()"></div>
-<div class="filter-item"><label>状态</label><select id="filterStatus" onchange="applyFilters()"><option value="">全部</option><option value="online">在线</option><option value="offline">已下线</option><option value="draft">草稿</option></select></div>
+<div class="filter-item"><label>状态</label><select id="filterStatus" onchange="applyFilters()"><option value="">全部</option><option value="online">在线</option><option value="offline">已下线</option></select></div>
 <div class="filter-item"><label>来源</label><select id="filterOfficial" onchange="applyFilters()"><option value="">全部</option><option value="official">官方</option><option value="ugc">UGC</option></select></div>
-<div class="filter-item"><label>话题特色</label><select id="filterFeature" onchange="applyFilters()"><option value="">全部</option><option value="mutual">互助</option><option value="non_mutual">非互助</option></select></div>
-<div class="filter-item"><label>周期类型</label><select id="filterCycle" onchange="applyFilters()"><option value="">全部</option><option value="long">长期</option><option value="periodic">周期性</option><option value="short">短期</option></select></div>
+<div class="filter-item"><label>话题</label><select id="filterFeature" onchange="applyFilters()"><option value="">全部</option><option value="mutual">互助</option><option value="non_mutual">非互助</option></select></div>
+<div class="filter-item"><label>周期</label><select id="filterCycle" onchange="applyFilters()"><option value="">全部</option><option value="long">长期</option><option value="periodic">周期性</option><option value="short">短期</option></select></div>
+<div class="filter-item"><label>频率</label><select id="filterFreq" onchange="applyFilters()"><option value="">全部</option><option value="high">高频</option><option value="low">低频</option></select></div>
 <div class="filter-item"><label>首页透出</label><select id="filterHomepage" onchange="applyFilters()"><option value="">全部</option><option value="true">是</option><option value="false">否</option></select></div>
 <div class="filter-item"><label>适用身份</label><div class="el-select" id="identityDropdown" style="position:relative;display:inline-block;vertical-align:top">
 <button type="button" class="btn btn-outline btn-sm el-select-btn" onclick="toggleIdentityDropdown(event)" id="identityDropdownBtn" style="min-width:130px;text-align:left;display:flex;align-items:center;justify-content:space-between;height:34px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;background:var(--bg);border-radius:var(--radius)">全部 <span style="font-size:10px;margin-left:auto;padding-left:4px">▼</span></button>
@@ -276,8 +301,8 @@ tbody tr.selected{background:var(--primary-light)}
 <label style="display:flex;align-items:center;gap:6px;padding:6px 14px;cursor:pointer;font-size:13px;white-space:nowrap;transition:background .15s" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background=''" onchange="onIdentityFilterChange()"><input type="checkbox" class="identityFilterCb" value="preparing" style="accent-color:var(--primary);border-radius:3px"> 备孕</label>
 <label style="display:flex;align-items:center;gap:6px;padding:6px 14px;cursor:pointer;font-size:13px;white-space:nowrap;transition:background .15s" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background=''" onchange="onIdentityFilterChange()"><input type="checkbox" class="identityFilterCb" value="mom" style="accent-color:var(--primary);border-radius:3px"> 辣妈</label>
 </div></div></div>
-<div class="filter-item"><label>责任编辑</label><input type="text" id="filterEditor" placeholder="编辑名称" oninput="applyFilters()"></div>
 <div class="filter-item" style="flex:1;min-width:200px"><label>创建时间</label><div style="display:flex;gap:6px;align-items:center"><input type="date" id="filterDateFrom" onchange="applyFilters()"><span style="color:var(--text-secondary);font-size:12px">至</span><input type="date" id="filterDateTo" onchange="applyFilters()"></div></div>
+<div class="filter-item" style="flex:1;min-width:200px"><label>推荐时间</label><div style="display:flex;gap:6px;align-items:center"><input type="date" id="filterRecDateFrom" onchange="applyFilters()"><span style="color:var(--text-secondary);font-size:12px">至</span><input type="date" id="filterRecDateTo" onchange="applyFilters()"></div></div>
 <div class="filter-actions"><button class="btn btn-outline btn-sm" onclick="resetFilters()">重置</button><button class="btn btn-primary btn-sm" onclick="applyFilters()">查询</button></div>
 </div>
 </div>
@@ -296,7 +321,7 @@ tbody tr.selected{background:var(--primary-light)}
 <table>
 <thead><tr>
 <th><input type="checkbox" class="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
-<th>ID</th><th>名称</th><th>状态</th><th>来源</th><th style="min-width:80px">特色标签</th><th>频率</th><th>周期</th><th>适用身份</th><th style="min-width:80px">今日发帖</th><th style="min-width:80px">参与人数</th><th style="min-width:80px">总互动率</th><th>首页透出</th><th>责任编辑</th><th>更新时间</th><th style="min-width:150px">操作</th>
+<th>话题信息</th><th>状态</th><th>来源</th><th style="min-width:100px">话题标签</th><th>适用身份</th><th style="min-width:80px">关联帖子数</th><th style="min-width:110px">曝光/阅读/讨论</th><th>首页透出</th><th style="min-width:140px">推荐时间</th><th style="min-width:120px">创建时间/创建人</th><th style="min-width:120px">操作时间/操作人</th><th style="min-width:150px">操作</th>
 </tr></thead>
 <tbody id="tableBody"></tbody>
 </table>
@@ -319,7 +344,7 @@ tbody tr.selected{background:var(--primary-light)}
 <h3>批量修改标签</h3>
 <p>已选 <span id="batchCountDisplay">0</span> 条话题，可批量修改以下属性：</p>
 <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
-<label style="font-size:13px;font-weight:500">特色标签：</label>
+<label style="font-size:13px;font-weight:500">特色：</label>
 <select id="batchFeature" style="height:34px;border:1px solid var(--border);border-radius:var(--radius);padding:0 10px;font-size:13px;background:var(--bg);outline:none">
 <option value="">不修改</option><option value="mutual">互助</option><option value="non_mutual">非互助</option>
 </select>
@@ -339,6 +364,21 @@ tbody tr.selected{background:var(--primary-light)}
 </div>
 </div>
 <script>
+/* ===== Sidebar Toggle ===== */
+function toggleNav(el){
+  const sub=el.nextElementSibling;
+  if(sub&&sub.classList.contains('nav-sub')){
+    const arrow=el.querySelector('.arrow');
+    if(sub.style.maxHeight&&sub.style.maxHeight!=='0px'){
+      sub.style.maxHeight='0px';
+      if(arrow)arrow.classList.remove('open');
+    }else{
+      sub.style.maxHeight=sub.scrollHeight+'px';
+      if(arrow)arrow.classList.add('open');
+    }
+  }
+}
+
 /* ===== Data ===== */
 const statusMap={online:'在线',offline:'已下线',draft:'草稿'};
 const featureMap={mutual:'互助',non_mutual:'非互助'};
@@ -346,39 +386,45 @@ const cycleMap={long:'长期',periodic:'周期性',short:'短期'};
 const freqMap={high:'高频',low:'低频'};
 const identityMap={minor:'未成年',period:'经期',pregnant:'怀孕',preparing:'备孕',mom:'辣妈'};
 
+function formatNum(n){
+  if(n===0||n===undefined||n===null)return '0';
+  return Number(n).toLocaleString('en-US');
+}
+
 var editingId=null,selectedIds=new Set(),currentTab='all',currentPage=1,pageSize=15;
 
 /* ===== 待纳管预警规则 (双条件) ===== */
-var alertRule={conditions:[{metric:'dailyPosts',threshold:500},{metric:'participants',threshold:1000}],logic:'and'};
-var alertMetricLabels={dailyPosts:'发帖量',participants:'参与人数'};
+var alertRule={conditions:[{metric:'dailyPosts',threshold:500},{metric:'totalDiscuss',threshold:1000}],logic:'and'};
+var alertMetricLabels={dailyPosts:'发帖量',totalDiscuss:'总讨论'};
 
-var topics=[{id:10001,name:'大姨妈互助指南',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'minor,period,mom',dailyPosts:328,participants:1820,interactRate:'8.2%',homepage:true,editor:'张小美',updated:'2026-06-04',subtitle:'每月那几天，姐妹来帮忙',desc:'分享经期护理经验，互相帮助',icon:'',hotTag:'hot',virtual:888,showBanner:true,showFeeds:true,category:'health',posMinor:1,posPeriod:1,posPregnant:3,posPreparing:2,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
-{id:10002,name:'孕期食谱分享',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'pregnant,preparing',dailyPosts:215,participants:980,interactRate:'7.5%',homepage:true,editor:'李小花',updated:'2026-06-03',subtitle:'孕期吃什么，这里有答案',desc:'孕期营养食谱交流',icon:'',hotTag:'rec',virtual:666,showBanner:true,showFeeds:true,category:'health',posMinor:5,posPeriod:3,posPregnant:1,posPreparing:1,posMom:4,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
-{id:10003,name:'宝宝辅食DIY',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:189,participants:756,interactRate:'9.1%',homepage:true,editor:'张小美',updated:'2026-06-02',subtitle:'辅食制作，简单又营养',desc:'宝宝辅食制作教程',icon:'',hotTag:'new',virtual:520,showBanner:true,showFeeds:true,category:'parenting',posMinor:8,posPeriod:6,posPregnant:5,posPreparing:3,posMom:1,dateStart:'2026-06-01',dateEnd:'2026-12-31'},
-{id:10004,name:'护肤好物推荐',status:'online',official:'official',feature:'non_mutual',cycle:'short',freq:'low',source:'operation',card:'text',identity:'minor,period,mom',dailyPosts:56,participants:230,interactRate:'3.2%',homepage:false,editor:'李小花',updated:'2026-05-28',subtitle:'好物种草',desc:'美妆护肤好物推荐',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'beauty',posMinor:2,posPeriod:2,posPregnant:7,posPreparing:5,posMom:3,dateStart:'2026-05-01',dateEnd:'2026-06-30'},
-{id:10005,name:'备孕日记',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'preparing',dailyPosts:142,participants:620,interactRate:'6.8%',homepage:true,editor:'王大明',updated:'2026-06-01',subtitle:'一起迎接新生命',desc:'备孕经验交流',icon:'',hotTag:'rec',virtual:320,showBanner:true,showFeeds:true,category:'health',posMinor:4,posPeriod:3,posPregnant:2,posPreparing:1,posMom:6,dateStart:'2026-03-01',dateEnd:'2026-12-31'},
-{id:10006,name:'产后恢复训练',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:276,participants:1340,interactRate:'11.3%',homepage:true,editor:'张小美',updated:'2026-06-04',subtitle:'产后恢复，从零开始',desc:'产后恢复训练指南',icon:'',hotTag:'hot',virtual:999,showBanner:true,showFeeds:true,category:'health',posMinor:7,posPeriod:5,posPregnant:4,posPreparing:3,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
-{id:10007,name:'情感树洞',status:'online',official:'official',feature:'non_mutual',cycle:'long',freq:'low',source:'operation',card:'text',identity:'minor,period,pregnant,preparing,mom',dailyPosts:98,participants:450,interactRate:'5.6%',homepage:false,editor:'李小花',updated:'2026-05-30',subtitle:'倾听你的心声',desc:'情感交流树洞',icon:'',hotTag:'none',virtual:100,showBanner:false,showFeeds:true,category:'emotion',posMinor:3,posPeriod:2,posPregnant:6,posPreparing:4,posMom:5,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
-{id:10008,name:'周末去哪儿玩',status:'online',official:'official',feature:'non_mutual',cycle:'short',freq:'low',source:'operation',card:'image',identity:'minor,period,mom',dailyPosts:34,participants:120,interactRate:'2.1%',homepage:false,editor:'王大明',updated:'2026-05-25',subtitle:'周末出游推荐',desc:'周末出游攻略',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'life',posMinor:6,posPeriod:8,posPregnant:9,posPreparing:7,posMom:8,dateStart:'2026-05-20',dateEnd:'2026-06-20'},
-{id:10009,name:'新手妈妈交流群',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:401,participants:2100,interactRate:'12.5%',homepage:true,editor:'张小美',updated:'2026-06-04',subtitle:'新手妈妈，一起成长',desc:'新手妈妈交流社区',icon:'',hotTag:'hot',virtual:1200,showBanner:true,showFeeds:true,category:'parenting',posMinor:9,posPeriod:7,posPregnant:8,posPreparing:6,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
-{id:10010,name:'经期运动指南',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'period',dailyPosts:167,participants:820,interactRate:'8.9%',homepage:true,editor:'李小花',updated:'2026-06-02',subtitle:'经期也能运动',desc:'经期运动指导',icon:'',hotTag:'rec',virtual:450,showBanner:true,showFeeds:true,category:'health',posMinor:3,posPeriod:1,posPregnant:4,posPreparing:2,posMom:7,dateStart:'2026-04-01',dateEnd:'2026-12-31'},
-{id:10011,name:'化妆小技巧',status:'online',official:'official',feature:'non_mutual',cycle:'long',freq:'low',source:'operation',card:'text',identity:'minor,period,mom',dailyPosts:45,participants:180,interactRate:'2.8%',homepage:false,editor:'王大明',updated:'2026-05-20',subtitle:'手残党也能学会',desc:'化妆小技巧分享',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'beauty',posMinor:5,posPeriod:4,posPregnant:10,posPreparing:8,posMom:6,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
-{id:10012,name:'孕期瑜伽',status:'draft',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'pregnant',dailyPosts:0,participants:0,interactRate:'-',homepage:false,editor:'张小美',updated:'2026-06-01',subtitle:'',desc:'孕期瑜伽教程',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'health',posMinor:6,posPeriod:4,posPregnant:1,posPreparing:2,posMom:8,dateStart:'',dateEnd:''},
-{id:10013,name:'辣妈穿搭',status:'online',official:'official',feature:'non_mutual',cycle:'short',freq:'low',source:'operation',card:'image',identity:'mom',dailyPosts:23,participants:95,interactRate:'1.5%',homepage:false,editor:'李小花',updated:'2026-05-15',subtitle:'时尚辣妈穿搭',desc:'辣妈穿搭分享',icon:'',hotTag:'new',virtual:200,showBanner:false,showFeeds:true,category:'beauty',posMinor:10,posPeriod:9,posPregnant:8,posPreparing:7,posMom:1,dateStart:'2026-05-01',dateEnd:'2026-07-31'},
-{id:10014,name:'备孕饮食调理',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'preparing',dailyPosts:112,participants:540,interactRate:'7.2%',homepage:true,editor:'张小美',updated:'2026-06-03',subtitle:'饮食调理助你好孕',desc:'备孕饮食调理方案',icon:'',hotTag:'rec',virtual:380,showBanner:true,showFeeds:true,category:'health',posMinor:8,posPeriod:6,posPregnant:3,posPreparing:1,posMom:5,dateStart:'2026-02-01',dateEnd:'2026-12-31'},
-{id:10015,name:'宝宝睡眠指南',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:258,participants:1250,interactRate:'10.2%',homepage:true,editor:'李小花',updated:'2026-06-04',subtitle:'宝宝睡得好，妈妈才安心',desc:'宝宝睡眠问题解答',icon:'',hotTag:'hot',virtual:750,showBanner:true,showFeeds:true,category:'parenting',posMinor:10,posPeriod:8,posPregnant:9,posPreparing:7,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
-{id:10016,name:'美妆测评',status:'online',official:'ugc',feature:'non_mutual',cycle:'short',freq:'low',source:'user',card:'image',identity:'minor,period,mom',dailyPosts:18,participants:76,interactRate:'1.2%',homepage:false,editor:'-',updated:'2026-05-10',subtitle:'',desc:'美妆产品真实测评',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'beauty',posMinor:3,posPeriod:5,posPregnant:8,posPreparing:6,posMom:4,dateStart:'',dateEnd:''},
-{id:10017,name:'带娃旅行',status:'online',official:'ugc',feature:'non_mutual',cycle:'short',freq:'low',source:'user',card:'image',identity:'mom',dailyPosts:12,participants:45,interactRate:'0.8%',homepage:false,editor:'-',updated:'2026-05-08',subtitle:'',desc:'带娃旅行攻略',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'life',posMinor:5,posPeriod:4,posPregnant:7,posPreparing:5,posMom:3,dateStart:'',dateEnd:''},
-{id:10018,name:'产后抑郁关怀',status:'online',official:'ugc',feature:'mutual',cycle:'long',freq:'high',source:'user',card:'text',identity:'mom',dailyPosts:87,participants:360,interactRate:'4.5%',homepage:false,editor:'-',updated:'2026-06-01',subtitle:'',desc:'产后抑郁互助关怀',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'emotion',posMinor:6,posPeriod:5,posPregnant:4,posPreparing:3,posMom:1,dateStart:'',dateEnd:''},
-{id:10019,name:'月经周期记录',status:'online',official:'ugc',feature:'mutual',cycle:'long',freq:'high',source:'user',card:'image',identity:'period',dailyPosts:203,participants:1890,interactRate:'6.7%',homepage:true,editor:'-',updated:'2026-06-04',subtitle:'',desc:'月经周期记录与交流',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'health',posMinor:1,posPeriod:1,posPregnant:5,posPreparing:4,posMom:9,dateStart:'',dateEnd:''},
-{id:10020,name:'孕期护肤',status:'online',official:'ugc',feature:'non_mutual',cycle:'long',freq:'low',source:'user',card:'text',identity:'pregnant',dailyPosts:28,participants:110,interactRate:'1.9%',homepage:false,editor:'-',updated:'2026-05-22',subtitle:'',desc:'孕期护肤品推荐',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'beauty',posMinor:8,posPeriod:7,posPregnant:1,posPreparing:3,posMom:5,dateStart:'',dateEnd:''},
-{id:10021,name:'宝宝早教',status:'online',official:'ugc',feature:'mutual',cycle:'long',freq:'high',source:'user',card:'image',identity:'mom',dailyPosts:312,participants:1450,interactRate:'8.7%',homepage:true,editor:'-',updated:'2026-06-04',subtitle:'',desc:'宝宝早教经验分享',icon:'',hotTag:'none',virtual:0,showBanner:true,showFeeds:true,category:'parenting',posMinor:9,posPeriod:8,posPregnant:9,posPreparing:7,posMom:1,dateStart:'',dateEnd:''}];
+var topics=[{id:10001,name:'大姨妈互助指南',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'minor,period,mom',dailyPosts:328,totalExposure:125000,totalReads:45200,totalDiscuss:3820,homepage:true,editor:'张小美',updated:'2026-06-04',creator:'张小美',created:'2026-01-01',subtitle:'每月那几天，姐妹来帮忙',desc:'分享经期护理经验，互相帮助',icon:'',hotTag:'hot',virtual:888,showBanner:true,showFeeds:true,category:'health',posMinor:1,posPeriod:1,posPregnant:3,posPreparing:2,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
+{id:10002,name:'孕期食谱分享',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'pregnant,preparing',dailyPosts:215,totalExposure:98000,totalReads:32100,totalDiscuss:2450,homepage:true,editor:'李小花',updated:'2026-06-03',creator:'李小花',created:'2026-01-01',subtitle:'孕期吃什么，这里有答案',desc:'孕期营养食谱交流',icon:'',hotTag:'rec',virtual:666,showBanner:true,showFeeds:true,category:'health',posMinor:5,posPeriod:3,posPregnant:1,posPreparing:1,posMom:4,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
+{id:10003,name:'宝宝辅食DIY',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:189,totalExposure:76000,totalReads:28900,totalDiscuss:2100,homepage:true,editor:'张小美',updated:'2026-06-02',creator:'张小美',created:'2026-06-01',subtitle:'辅食制作，简单又营养',desc:'宝宝辅食制作教程',icon:'',hotTag:'new',virtual:520,showBanner:true,showFeeds:true,category:'parenting',posMinor:8,posPeriod:6,posPregnant:5,posPreparing:3,posMom:1,dateStart:'2026-06-01',dateEnd:'2026-12-31'},
+{id:10004,name:'护肤好物推荐',status:'online',official:'official',feature:'non_mutual',cycle:'short',freq:'low',source:'operation',card:'text',identity:'minor,period,mom',dailyPosts:56,totalExposure:23000,totalReads:8200,totalDiscuss:560,homepage:false,editor:'李小花',updated:'2026-05-28',creator:'李小花',created:'2026-05-01',subtitle:'好物种草',desc:'美妆护肤好物推荐',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'beauty',posMinor:2,posPeriod:2,posPregnant:7,posPreparing:5,posMom:3,dateStart:'2026-05-01',dateEnd:'2026-06-30'},
+{id:10005,name:'备孕日记',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'preparing',dailyPosts:142,totalExposure:62000,totalReads:21500,totalDiscuss:1820,homepage:true,editor:'王大明',updated:'2026-06-01',creator:'王大明',created:'2026-03-01',subtitle:'一起迎接新生命',desc:'备孕经验交流',icon:'',hotTag:'rec',virtual:320,showBanner:true,showFeeds:true,category:'health',posMinor:4,posPeriod:3,posPregnant:2,posPreparing:1,posMom:6,dateStart:'2026-03-01',dateEnd:'2026-12-31'},
+{id:10006,name:'产后恢复训练',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:276,totalExposure:134000,totalReads:52300,totalDiscuss:4100,homepage:true,editor:'张小美',updated:'2026-06-04',creator:'张小美',created:'2026-01-01',subtitle:'产后恢复，从零开始',desc:'产后恢复训练指南',icon:'',hotTag:'hot',virtual:999,showBanner:true,showFeeds:true,category:'health',posMinor:7,posPeriod:5,posPregnant:4,posPreparing:3,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
+{id:10007,name:'情感树洞',status:'online',official:'official',feature:'non_mutual',cycle:'long',freq:'low',source:'operation',card:'text',identity:'minor,period,pregnant,preparing,mom',dailyPosts:98,totalExposure:45000,totalReads:15200,totalDiscuss:980,homepage:false,editor:'李小花',updated:'2026-05-30',creator:'李小花',created:'2026-01-01',subtitle:'倾听你的心声',desc:'情感交流树洞',icon:'',hotTag:'none',virtual:100,showBanner:false,showFeeds:true,category:'emotion',posMinor:3,posPeriod:2,posPregnant:6,posPreparing:4,posMom:5,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
+{id:10008,name:'周末去哪儿玩',status:'online',official:'official',feature:'non_mutual',cycle:'short',freq:'low',source:'operation',card:'image',identity:'minor,period,mom',dailyPosts:34,totalExposure:12000,totalReads:4200,totalDiscuss:340,homepage:false,editor:'王大明',updated:'2026-05-25',creator:'王大明',created:'2026-05-20',subtitle:'周末出游推荐',desc:'周末出游攻略',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'life',posMinor:6,posPeriod:8,posPregnant:9,posPreparing:7,posMom:8,dateStart:'2026-05-20',dateEnd:'2026-06-20'},
+{id:10009,name:'新手妈妈交流群',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:401,totalExposure:210000,totalReads:78500,totalDiscuss:6200,homepage:true,editor:'张小美',updated:'2026-06-04',creator:'张小美',created:'2026-01-01',subtitle:'新手妈妈，一起成长',desc:'新手妈妈交流社区',icon:'',hotTag:'hot',virtual:1200,showBanner:true,showFeeds:true,category:'parenting',posMinor:9,posPeriod:7,posPregnant:8,posPreparing:6,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
+{id:10010,name:'经期运动指南',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'period',dailyPosts:167,totalExposure:82000,totalReads:31200,totalDiscuss:2450,homepage:true,editor:'李小花',updated:'2026-06-02',creator:'李小花',created:'2026-04-01',subtitle:'经期也能运动',desc:'经期运动指导',icon:'',hotTag:'rec',virtual:450,showBanner:true,showFeeds:true,category:'health',posMinor:3,posPeriod:1,posPregnant:4,posPreparing:2,posMom:7,dateStart:'2026-04-01',dateEnd:'2026-12-31'},
+{id:10011,name:'化妆小技巧',status:'online',official:'official',feature:'non_mutual',cycle:'long',freq:'low',source:'operation',card:'text',identity:'minor,period,mom',dailyPosts:45,totalExposure:18000,totalReads:6200,totalDiscuss:450,homepage:false,editor:'王大明',updated:'2026-05-20',creator:'王大明',created:'2026-01-01',subtitle:'手残党也能学会',desc:'化妆小技巧分享',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'beauty',posMinor:5,posPeriod:4,posPregnant:10,posPreparing:8,posMom:6,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
+{id:10012,name:'孕期瑜伽',status:'draft',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'pregnant',dailyPosts:0,totalExposure:0,totalReads:0,totalDiscuss:0,homepage:false,editor:'张小美',updated:'2026-06-01',creator:'张小美',created:'2026-06-01',subtitle:'',desc:'孕期瑜伽教程',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'health',posMinor:6,posPeriod:4,posPregnant:1,posPreparing:2,posMom:8,dateStart:'',dateEnd:''},
+{id:10013,name:'辣妈穿搭',status:'online',official:'official',feature:'non_mutual',cycle:'short',freq:'low',source:'operation',card:'image',identity:'mom',dailyPosts:23,totalExposure:9500,totalReads:3200,totalDiscuss:230,homepage:false,editor:'李小花',updated:'2026-05-15',creator:'李小花',created:'2026-05-01',subtitle:'时尚辣妈穿搭',desc:'辣妈穿搭分享',icon:'',hotTag:'new',virtual:200,showBanner:false,showFeeds:true,category:'beauty',posMinor:10,posPeriod:9,posPregnant:8,posPreparing:7,posMom:1,dateStart:'2026-05-01',dateEnd:'2026-07-31'},
+{id:10014,name:'备孕饮食调理',status:'online',official:'official',feature:'mutual',cycle:'periodic',freq:'high',source:'operation',card:'image',identity:'preparing',dailyPosts:112,totalExposure:54000,totalReads:19800,totalDiscuss:1560,homepage:true,editor:'张小美',updated:'2026-06-03',creator:'张小美',created:'2026-02-01',subtitle:'饮食调理助你好孕',desc:'备孕饮食调理方案',icon:'',hotTag:'rec',virtual:380,showBanner:true,showFeeds:true,category:'health',posMinor:8,posPeriod:6,posPregnant:3,posPreparing:1,posMom:5,dateStart:'2026-02-01',dateEnd:'2026-12-31'},
+{id:10015,name:'宝宝睡眠指南',status:'online',official:'official',feature:'mutual',cycle:'long',freq:'high',source:'operation',card:'image',identity:'mom',dailyPosts:258,totalExposure:125000,totalReads:48200,totalDiscuss:3800,homepage:true,editor:'李小花',updated:'2026-06-04',creator:'李小花',created:'2026-01-01',subtitle:'宝宝睡得好，妈妈才安心',desc:'宝宝睡眠问题解答',icon:'',hotTag:'hot',virtual:750,showBanner:true,showFeeds:true,category:'parenting',posMinor:10,posPeriod:8,posPregnant:9,posPreparing:7,posMom:1,dateStart:'2026-01-01',dateEnd:'2029-01-01'},
+{id:10016,name:'美妆测评',status:'online',official:'ugc',feature:'non_mutual',cycle:'short',freq:'low',source:'user',card:'image',identity:'minor,period,mom',dailyPosts:18,totalExposure:7600,totalReads:2800,totalDiscuss:180,homepage:false,editor:'-',updated:'2026-05-10',creator:'用户',created:'2026-05-10',subtitle:'',desc:'美妆产品真实测评',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'beauty',posMinor:3,posPeriod:5,posPregnant:8,posPreparing:6,posMom:4,dateStart:'',dateEnd:''},
+{id:10017,name:'带娃旅行',status:'online',official:'ugc',feature:'non_mutual',cycle:'short',freq:'low',source:'user',card:'image',identity:'mom',dailyPosts:12,totalExposure:4500,totalReads:1600,totalDiscuss:120,homepage:false,editor:'-',updated:'2026-05-08',creator:'用户',created:'2026-05-08',subtitle:'',desc:'带娃旅行攻略',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'life',posMinor:5,posPeriod:4,posPregnant:7,posPreparing:5,posMom:3,dateStart:'',dateEnd:''},
+{id:10018,name:'产后抑郁关怀',status:'online',official:'ugc',feature:'mutual',cycle:'long',freq:'high',source:'user',card:'text',identity:'mom',dailyPosts:87,totalExposure:36000,totalReads:12500,totalDiscuss:980,homepage:false,editor:'-',updated:'2026-06-01',creator:'用户',created:'2026-06-01',subtitle:'',desc:'产后抑郁互助关怀',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'emotion',posMinor:6,posPeriod:5,posPregnant:4,posPreparing:3,posMom:1,dateStart:'',dateEnd:''},
+{id:10019,name:'月经周期记录',status:'online',official:'ugc',feature:'mutual',cycle:'long',freq:'high',source:'user',card:'image',identity:'period',dailyPosts:203,totalExposure:189000,totalReads:68200,totalDiscuss:5400,homepage:true,editor:'-',updated:'2026-06-04',creator:'用户',created:'2026-06-04',subtitle:'',desc:'月经周期记录与交流',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:true,category:'health',posMinor:1,posPeriod:1,posPregnant:5,posPreparing:4,posMom:9,dateStart:'',dateEnd:''},
+{id:10020,name:'孕期护肤',status:'online',official:'ugc',feature:'non_mutual',cycle:'long',freq:'low',source:'user',card:'text',identity:'pregnant',dailyPosts:28,totalExposure:11000,totalReads:3800,totalDiscuss:280,homepage:false,editor:'-',updated:'2026-05-22',creator:'用户',created:'2026-05-22',subtitle:'',desc:'孕期护肤品推荐',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:false,category:'beauty',posMinor:8,posPeriod:7,posPregnant:1,posPreparing:3,posMom:5,dateStart:'',dateEnd:''},
+{id:10021,name:'宝宝早教',status:'online',official:'ugc',feature:'mutual',cycle:'long',freq:'high',source:'user',card:'image',identity:'mom',dailyPosts:312,totalExposure:145000,totalReads:52800,totalDiscuss:4200,homepage:true,editor:'-',updated:'2026-06-04',creator:'用户',created:'2026-06-04',subtitle:'',desc:'宝宝早教经验分享',icon:'',hotTag:'none',virtual:0,showBanner:true,showFeeds:true,category:'parenting',posMinor:9,posPeriod:8,posPregnant:9,posPreparing:7,posMom:1,dateStart:'',dateEnd:''}];
 
 for(let i=22;i<=32;i++){
   let features=['mutual','non_mutual'][i%2],cycles=['long','periodic','short'][i%3],freqs=['high','low'][i%2];
   let ids=['minor','period','pregnant','preparing','mom'];
   let idt=ids.slice(0,1+(i%4)).join(',');
-  topics.push({id:10000+i,name:`UGC话题${i-21}`,status:'online',official:'ugc',feature:features,cycle:cycles,freq:freqs,source:'user',card:'image',identity:idt,dailyPosts:Math.floor(Math.random()*500),participants:Math.floor(Math.random()*2000),interactRate:(Math.random()*10).toFixed(1)+'%',homepage:i%3===0,editor:'-',updated:'2026-06-0'+(i%5+1),subtitle:'',desc:'',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:i%2===0,category:'emotion',posMinor:5,posPeriod:3,posPregnant:7,posPreparing:4,posMom:6,dateStart:'',dateEnd:''});
+  let dp=Math.floor(Math.random()*500),ex=Math.floor(Math.random()*200000),rd=Math.floor(Math.random()*80000),ds=Math.floor(Math.random()*6000);
+  topics.push({id:10000+i,name:`UGC话题${i-21}`,status:'online',official:'ugc',feature:features,cycle:cycles,freq:freqs,source:'user',card:'image',identity:idt,dailyPosts:dp,totalExposure:ex,totalReads:rd,totalDiscuss:ds,homepage:i%3===0,editor:'-',updated:'2026-06-0'+(i%5+1),subtitle:'',desc:'',icon:'',hotTag:'none',virtual:0,showBanner:false,showFeeds:i%2===0,category:'emotion',posMinor:5,posPeriod:3,posPregnant:7,posPreparing:4,posMom:6,dateStart:'',dateEnd:''});
 }
 
 /* ===== Render ===== */
@@ -403,7 +449,12 @@ function renderTable(){
     let hp=t.homepage?'<span style="color:var(--success);font-weight:500">是</span>':'<span style="color:var(--text-secondary)">否</span>';
     let ch=selectedIds.has(t.id)?'checked':'',rc=selectedIds.has(t.id)?'selected':'';
     let statusAct=t.status==="offline"?"<button class=\"btn btn-text btn-xs\" onclick=\"onlineTopic("+t.id+")\" style=\"color:var(--success)\">上线</button>":"<button class=\"btn btn-text btn-xs\" onclick=\"offlineTopic("+t.id+")\" style=\"color:var(--danger)\">下线</button>";let acts=t.official==="official"?"<button class=\"btn btn-text btn-xs\" onclick=\"editTopic("+t.id+")\">编辑</button>"+statusAct:"<button class=\"btn btn-primary btn-xs\" onclick=\"adoptTopic("+t.id+")\">收编</button>"+statusAct;
-    let identStr=t.identity.split(",").map(id=>identityMap[id]).join(" ");return `<tr class="${rc}"><td><input type="checkbox" class="checkbox" ${ch} onchange="toggleSelect(${t.id})"></td><td style="color:var(--text-secondary);font-size:12px">${t.id}</td><td style="font-weight:500;max-width:160px;overflow:hidden;text-overflow:ellipsis" title="${t.name}">${t.name}</td><td>${st}</td><td>${ot}</td><td>${ft}</td><td>${fq}</td><td>${ct}</td><td style="font-size:12px">${identStr}</td><td style="font-weight:600;color:var(--primary)">${t.dailyPosts}</td><td style="font-weight:600;color:var(--info)">${t.participants||0}</td><td style="font-weight:500">${t.interactRate}</td><td>${hp}</td><td style="font-size:12px;color:var(--text-secondary)">${t.editor}</td><td style="font-size:12px;color:var(--text-secondary)">${t.updated}</td><td>${acts}</td></tr>`;
+    let identStr=t.identity.split(",").map(id=>identityMap[id]).join(" ");
+    let ftLabel=t.feature==='mutual'?'互助':'非互助',fqLabel=t.freq==='high'?'高频':'低频',ctLabel=t.cycle==='long'?'长期':t.cycle==='periodic'?'周期性':'短期';
+    let exposure=t.totalExposure||0,reads=t.totalReads||0,discuss=t.totalDiscuss||0;
+    let recTime=(t.dateStart&&t.dateEnd)?(t.dateStart+' ~ '+t.dateEnd):'-';
+    let created=t.created||t.updated||'-',creator=t.creator||t.editor||'-';
+    return `<tr class="${rc}"><td><input type="checkbox" class="checkbox" ${ch} onchange="toggleSelect(${t.id})"></td><td style="line-height:1.7"><span style="color:var(--text-secondary);font-size:11px">${t.id}</span><br><span style="font-weight:500;max-width:160px;overflow:hidden;text-overflow:ellipsis;display:inline-block" title="${t.name}">${t.name}</span></td><td>${st}</td><td>${ot}</td><td style="font-size:12px;line-height:1.7"><span style="color:var(--text-secondary)">特色</span> ${ft}<br><span style="color:var(--text-secondary)">频率</span> ${fq}<br><span style="color:var(--text-secondary)">周期</span> ${ct}</td><td style="font-size:12px">${identStr}</td><td style="font-weight:600;color:var(--primary)">${t.dailyPosts}</td><td style="font-size:12px;line-height:1.7"><span style="color:var(--text-secondary)">曝光</span> ${formatNum(exposure)}<br><span style="color:var(--text-secondary)">阅读</span> ${formatNum(reads)}<br><span style="color:var(--text-secondary)">讨论</span> ${formatNum(discuss)}</td><td>${hp}</td><td style="font-size:12px;color:var(--text-secondary)">${recTime}</td><td style="font-size:12px;color:var(--text-secondary)">${created}<br>${creator}</td><td style="font-size:12px;color:var(--text-secondary)">${t.updated}<br>${t.editor}</td><td>${acts}</td></tr>`;
   }).join('');
   
   document.getElementById('paginationTotal').textContent="共 "+total+" 条 · 已选 "+selectedIds.size+" 条";
@@ -427,7 +478,6 @@ function getFilteredTopics(){
   let ff=document.getElementById('filterFeature').value;
   let fc=document.getElementById('filterCycle').value;
   let fh=document.getElementById('filterHomepage').value;
-  let fe=document.getElementById('filterEditor').value.trim().toLowerCase();
   let df=document.getElementById('filterDateFrom').value;
   let dt=document.getElementById('filterDateTo').value;
   let ids=[];
@@ -439,10 +489,11 @@ function getFilteredTopics(){
     if(fo&&t.official!==fo)return false;
     if(ff&&t.feature!==ff)return false;
     if(fc&&t.cycle!==fc)return false;
+    let ffq=document.getElementById('filterFreq').value;
+    if(ffq&&t.freq!==ffq)return false;
     if(fh&&String(t.homepage)!==fh)return false;
-    if(fe&&!t.editor.toLowerCase().includes(fe))return false;
-    if(df&&t.updated<df)return false;
-    if(dt&&t.updated>dt)return false;
+    if(df&&t.created<df)return false;
+    if(dt&&t.created>dt)return false;
     if(ids.length>0){
       let tid=t.identity.split(',');
       if(!ids.some(id=>tid.includes(id)))return false;
@@ -540,10 +591,12 @@ function resetFilters(){
   document.getElementById('filterOfficial').value='';
   document.getElementById('filterFeature').value='';
   document.getElementById('filterCycle').value='';
+  document.getElementById('filterFreq').value='';
   document.getElementById('filterHomepage').value='';
-  document.getElementById('filterEditor').value='';
   document.getElementById('filterDateFrom').value='';
   document.getElementById('filterDateTo').value='';
+  document.getElementById('filterRecDateFrom').value='';
+  document.getElementById('filterRecDateTo').value='';
   document.querySelectorAll('.identityFilterCb').forEach(cb=>cb.checked=false);
   applyFilters();
 }
@@ -576,7 +629,7 @@ function showToast(type,msg){
 function openAlertRuleModal(){
   // 从 alertRule 填充弹窗
   var c1=alertRule.conditions[0]||{metric:'dailyPosts',threshold:500};
-  var c2=alertRule.conditions[1]||{metric:'participants',threshold:1000};
+  var c2=alertRule.conditions[1]||{metric:'totalDiscuss',threshold:1000};
   document.getElementById('alertMetric1').value=c1.metric;
   document.getElementById('alertThreshold1').value=c1.threshold;
   document.getElementById('alertMetric2').value=c2.metric;
@@ -604,12 +657,12 @@ function applyAlertRule(){
   showToast('success','入池规则已更新');
 }
 function resetAlertRule(){
-  alertRule={conditions:[{metric:'dailyPosts',threshold:500},{metric:'participants',threshold:1000}],logic:'and'};
+  alertRule={conditions:[{metric:'dailyPosts',threshold:500},{metric:'totalDiscuss',threshold:1000}],logic:'and'};
   localStorage.removeItem('meiyou_alert_rule');
   updateAlertRuleSummary();
   closeAlertRuleModal();
   applyFilters();
-  showToast('success','已恢复默认规则：发帖量 ≥ 500 且 参与人数 ≥ 1000');
+  showToast('success','已恢复默认规则：发帖量 ≥ 500 且 总讨论 ≥ 1000');
 }
 function loadAlertRule(){
   var d=localStorage.getItem('meiyou_alert_rule');
@@ -619,7 +672,7 @@ function loadAlertRule(){
         alertRule=r;
       } else if(r.metric&&r.threshold>0){
         // 兼容旧版单条件数据
-        alertRule={conditions:[{metric:r.metric,threshold:r.threshold},{metric:r.metric==='dailyPosts'?'participants':'dailyPosts',threshold:r.metric==='dailyPosts'?1000:500}],logic:'and'};
+        alertRule={conditions:[{metric:r.metric,threshold:r.threshold},{metric:r.metric==='dailyPosts'?'totalDiscuss':'dailyPosts',threshold:r.metric==='dailyPosts'?1000:500}],logic:'and'};
       }
     }catch(e){}
   }
@@ -690,7 +743,15 @@ window.addEventListener('message',function(e){
     }
   }
 });
-function init(){loadAlertRule();renderTable();} init();
+function init(){
+  // 默认创建时间筛选为近365天
+  var today=new Date();
+  var from=new Date(today);from.setDate(from.getDate()-365);
+  var fmt=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+  document.getElementById('filterDateFrom').value=fmt(from);
+  document.getElementById('filterDateTo').value=fmt(today);
+  loadAlertRule();renderTable();
+} init();
 </script>
 </body>
 </html>

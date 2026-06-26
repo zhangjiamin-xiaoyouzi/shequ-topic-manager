@@ -11,13 +11,35 @@
   --bg:#f2f2f5;--surface:#fff;--border:#e8e8ed;--text:rgba(0,0,0,.8);--text-secondary:rgba(0,0,0,.55);
   --success:#00cc99;--warning:#ff9f43;--danger:#ff4d4d;--info:#4f7cae;
   --radius:8px;--radius-sm:4px;--radius-lg:12px;--shadow:0 1px 2px rgba(0,0,0,.04);--shadow-lg:0 4px 12px rgba(0,0,0,.08);
+  --sidebar-w:220px;--header-h:56px;
 }
-body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5;display:flex}
 
-.page-form-header{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10}
-.page-form-header h3{font-size:16px;font-weight:600;flex:1;text-align:center}
-.page-form-body{max-width:1000px;margin:0;padding:20px 32px 40px}
-.page-form-footer{display:flex;gap:10px;justify-content:flex-end;padding:12px 32px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--surface);z-index:10}
+.sidebar{width:var(--sidebar-w);background:#fff;color:var(--text);position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
+.sidebar-logo{padding:16px 20px;font-size:15px;font-weight:600;color:var(--primary);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.sidebar-logo .dot{width:8px;height:8px;background:var(--primary);border-radius:50%}
+.sidebar-nav{flex:1;padding:8px 0;overflow-y:auto}
+.sidebar-nav .nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;cursor:pointer;transition:all .15s;border-left:3px solid transparent;margin:1px 0;color:var(--text);border-radius:0 4px 4px 0}
+.sidebar-nav .nav-item:hover{background:var(--primary-light);color:var(--primary)}
+.sidebar-nav .nav-item.active{background:var(--primary-light);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.sidebar-nav .nav-item .arrow{margin-left:auto;font-size:12px;transition:transform .2s;color:var(--text-secondary)}
+.sidebar-nav .nav-item .arrow.open{transform:rotate(90deg)}
+.sidebar-nav .nav-sub{overflow:hidden;transition:max-height .25s ease}
+.sidebar-nav .nav-sub .nav-sub-item{display:flex;align-items:center;padding:8px 20px 8px 44px;font-size:13px;cursor:pointer;transition:all .15s;color:var(--text);border-radius:0 4px 4px 0;margin:1px 0}
+.sidebar-nav .nav-sub .nav-sub-item:hover{background:var(--primary-light);color:var(--primary)}
+.sidebar-nav .nav-sub .nav-sub-item.active{background:var(--primary-light);color:var(--primary);font-weight:600}
+
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-width:0;min-height:100vh}
+.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50}
+.breadcrumb{font-size:13px;color:var(--text-secondary)}
+.breadcrumb span{color:var(--text);font-weight:600}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-right .user-name{font-size:13px;color:var(--text-secondary)}
+.form-shell{padding:20px 24px 32px}
+
+.page-form-wrap{max-width:960px;margin:0 auto;background:var(--surface);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.page-form-body{max-width:800px;margin:0 auto;padding:20px 24px 40px}
+.page-form-footer{display:flex;gap:10px;justify-content:flex-end;padding:12px 24px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--surface);z-index:10}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:0 16px;height:34px;border-radius:var(--radius);font-size:14px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:all .15s;white-space:nowrap;line-height:1}
 .btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
@@ -33,7 +55,7 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-syste
 .form-section:last-child{border-bottom:none;margin-bottom:0}
 .form-section-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:16px}
 .form-section-step{position:absolute;left:24px;top:24px;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:700;flex-shrink:0}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-grid{display:grid;grid-template-columns:1fr;gap:16px}
 .form-field{display:flex;flex-direction:column;gap:4px;text-align:left}
 .form-field.span-2{grid-column:span 2}
 .form-field label{font-size:13px;font-weight:500;color:var(--text);text-align:left;flex-shrink:0;height:20px;line-height:20px}
@@ -57,21 +79,54 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-syste
 </head>
 <body>
 
-<div class="page-form-header">
-<button class="btn btn-text" onclick="goBack()">← 返回</button>
-<h3 id="pageFormTitle">新建话题</h3>
-<div style="width:60px"></div>
-</div>
+<aside class="sidebar">
+<div class="sidebar-logo"><span class="dot"></span>社区运营管理系统</div>
+<nav class="sidebar-nav">
+  <div class="nav-item"><span>数据分析</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>运营工具</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>活动管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>质检管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>内容管理</span><span class="arrow open">▸</span></div>
+  <div class="nav-sub" style="max-height:200px">
+    <div class="nav-sub-item">动态内容池</div>
+    <div class="nav-sub-item">AIGC</div>
+    <div class="nav-sub-item">推送内容管理</div>
+  </div>
+  <div class="nav-item"><span>话题管理</span><span class="arrow open">▸</span></div>
+  <div class="nav-sub" style="max-height:200px">
+    <div class="nav-sub-item active" onclick="location.href='index.html'">话题列表</div>
+  </div>
+  <div class="nav-item"><span>任务中心后台</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>内容分发</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>回复管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>用户激励管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>达人认证管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>配置管理</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>评论审核</span></div>
+  <div class="nav-item"><span>创作者管理</span></div>
+  <div class="nav-item"><span>我的导出</span><span class="arrow">▸</span></div>
+  <div class="nav-item"><span>我的审批</span><span class="arrow">▸</span></div>
+</nav>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div class="breadcrumb">话题管理 / <span id="topBreadcrumb">新建话题</span></div>
+  <div class="header-right"><span class="user-name">张家敏</span></div>
+</header>
+
+<div class="form-shell">
+<div class="page-form-wrap">
 
 <div class="page-form-body">
 <div class="form-section"><div class="form-section-title"><span class="form-section-step">1</span> 基础与样式模块</div>
 <div class="form-grid">
 <div class="form-field span-2"><label>话题名称 <span class="required">*</span> <span class="hint">最多15字</span></label><input type="text" id="formName" maxlength="15" placeholder="请输入话题名称"></div>
-<div class="form-field"><label>副标题</label><input type="text" id="formSubtitle" placeholder="选填"></div>
-<div class="form-field"><label>卡片模式 <span class="required">*</span></label><select id="formCardMode"><option value="image">大图模式</option><option value="text">文字模式</option></select></div>
+<div class="form-field span-2"><label>副标题</label><input type="text" id="formSubtitle" placeholder="选填"></div>
+<div class="form-field span-2"><label>卡片模式 <span class="required">*</span></label><select id="formCardMode"><option value="image">大图模式</option><option value="text">文字模式</option></select></div>
 <div class="form-field span-2"><label>简介</label><textarea id="formDesc" rows="2" placeholder="话题简介描述"></textarea></div>
-<div class="form-field"><label>ICON图片 <span class="hint">300×300</span></label><input type="text" id="formIcon" placeholder="图片URL"></div>
-<div class="form-field"><label>热度标识</label><select id="formHotTag"><option value="none">无</option><option value="hot">热门</option><option value="new">新品</option><option value="rec">推荐</option></select></div>
+<div class="form-field span-2"><label>ICON图片 <span class="hint">300×300</span></label><input type="text" id="formIcon" placeholder="图片URL"></div>
+<div class="form-field span-2"><label>热度标识</label><select id="formHotTag"><option value="none">无</option><option value="hot">热门</option><option value="new">新品</option><option value="rec">推荐</option></select></div>
 <div class="form-field span-2"><label>虚拟热度值</label><input type="number" id="formVirtual" placeholder="选填" value="0"></div>
 <div class="form-field span-2"><label>展示位置</label><div class="checkbox-group">
 <label class="checkbox-option"><input type="checkbox" id="formShowBanner"> 展示Banner</label>
@@ -116,8 +171,7 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-syste
 <button class="btn btn-outline btn-sm" onclick="setQuickTime(0)">自定义</button>
 </div>
 </div>
-<div class="form-field"><label>推荐开始时间 <span class="required" id="reqStart">*</span></label><input type="date" id="formDateStart"></div>
-<div class="form-field"><label>推荐结束时间 <span class="required" id="reqEnd">*</span></label><input type="date" id="formDateEnd"></div>
+<div class="form-field"><label>推荐时间 <span class="required" id="reqStart">*</span></label><div style="display:flex;gap:8px;align-items:center"><input type="date" id="formDateStart" style="flex:1"><span style="color:var(--text-secondary);font-size:12px;flex-shrink:0">至</span><input type="date" id="formDateEnd" style="flex:1"></div></div>
 <div class="form-field span-2" id="cycleHint" style="display:none;background:#fff3e6;border-radius:8px;padding:10px 14px;font-size:12px;color:#b8730a"></div>
 </div>
 </div>
@@ -136,9 +190,12 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-syste
 
 <div class="page-form-footer">
 <button class="btn btn-outline" onclick="goBack()">取消</button>
-<button class="btn btn-outline" onclick="saveDraft()">存草稿</button>
 <button class="btn btn-primary" onclick="saveTopic()">保存话题</button>
 </div>
+
+</div>
+</div>
+</main>
 
 <div class="toast" id="toast"></div>
 
@@ -154,7 +211,8 @@ function initForm(){
       var json=decodeURIComponent(escape(atob(hash.substring(6))));
       topicData=JSON.parse(json);
       editingId=topicData.id;
-      document.getElementById('pageFormTitle').textContent='编辑话题 #'+topicData.id;
+      var title='编辑话题 #'+topicData.id;
+      document.getElementById('topBreadcrumb').textContent=title;
       populateForm(topicData);
       return;
     }catch(e){ console.log('Hash parse error:',e); }
@@ -169,7 +227,8 @@ function initForm(){
       window.opener.postMessage({type:'getTopic',id:editingId},'*');
     }
   }
-  document.getElementById('pageFormTitle').textContent='新建话题';
+  var title='新建话题';
+  document.getElementById('topBreadcrumb').textContent=title;
 }
 
 // Listen for topic data from opener
@@ -177,7 +236,8 @@ window.addEventListener('message',function(e){
   if(e.data && e.data.type==='topicData' && e.data.topic){
     topicData=e.data.topic;
     editingId=topicData.id;
-    document.getElementById('pageFormTitle').textContent='编辑话题 #'+topicData.id;
+    var title='编辑话题 #'+topicData.id;
+    document.getElementById('topBreadcrumb').textContent=title;
     populateForm(topicData);
   }
 });
@@ -230,18 +290,18 @@ function getRadioValue(groupId){
 function onCycleChange(){
   var cycle=getRadioValue('radioCycle'),hint=document.getElementById('cycleHint'),
       se=document.getElementById('formDateStart'),ee=document.getElementById('formDateEnd'),
-      rs=document.getElementById('reqStart'),re=document.getElementById('reqEnd');
+      rs=document.getElementById('reqStart');
   if(cycle==='long'){
     hint.style.display='block';
     hint.innerHTML='<b>注释</b>：长期话题将自动填充 3 年有效期';
     se.value='2026-06-04';ee.value='2029-06-04';
     se.style.borderColor='var(--border)';ee.style.borderColor='var(--border)';
-    rs.style.display='none';re.style.display='none';
+    rs.style.display='none';
   }else{
     hint.style.display='block';
     hint.innerHTML='<b>联动规则 B</b>：周期性/短期话题必须手动设置具体的起止时间';
     if(!se.value)se.value='';if(!ee.value)ee.value='';
-    rs.style.display='inline';re.style.display='inline';
+    rs.style.display='inline';
   }
 }
 
@@ -251,12 +311,6 @@ function setQuickTime(days){
   var ed=new Date(today);ed.setDate(ed.getDate()+days);
   se.value=today.toISOString().slice(0,10);ee.value=ed.toISOString().slice(0,10);
   showToast('success','已设置为 '+days+' 天（'+se.value+' ~ '+ee.value+'）');
-}
-
-function saveDraft(){
-  var name=document.getElementById('formName').value.trim();
-  if(!name){showToast('error','请输入话题名称');return;}
-  showToast('success','草稿已保存');
 }
 
 function saveTopic(){
